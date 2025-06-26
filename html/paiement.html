@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/paiement.css" />
+    <title>Règlement de la commande</title>
+  </head>
+  <body>
+    <figure>
+      <img
+        src="../img/images/Chevalet-table-Mcdonalds-Mcdo-Macdo-Numéro.webp"
+        alt="image-chevalet"
+      />
+    </figure>
+    <main>
+      <h1>Pour être servis à table,</h1>
+      <h4>Récupérez un chevalet et indiquez ici le numéro inscrit dessus</h4>
+      <div id="inputs">
+        <input type="text" inputmode="numeric" maxlength="1" /><input
+          disabled
+          type="text"
+          inputmode="numeric"
+          maxlength="1"
+        /><input disabled type="text" inputmode="numeric" maxlength="1" />
+      </div>
+    </main>
+    <div id="paiementButtons">
+      <button disabled type="button">Enregistrer ce numéro</button>
+      <button id="lastButton">
+        <a href="../index.html">Nouvelle commande</a>
+      </button>
+    </div>
+    <script src="../js/paiement.js"></script>
+  </body>
+</html>

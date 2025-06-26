@@ -1,0 +1,80 @@
+@import "./common.css";
+/* @font-face {
+    font-family: 'Caveat';
+    src: url();
+} */
+
+body {
+    font-size: 1.6rem;
+    background-image: url("../img/images/mc_landing_banner.png");
+    background-position: top;
+    background-repeat: no-repeat;
+    /* height: 100dvh; */
+    /* background-size: 100vw; */
+}
+
+figure {
+    width: clamp(100px, 20%, 200px);
+    margin: 10vh auto;
+
+    img {
+        border-radius: 15px;
+    }
+}
+
+main {
+    background-color: white;
+    width: clamp(300px, 75%, 700px);
+    margin: 0 auto;
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.432);
+
+    h4 {
+        margin: 5rem 0;
+    }
+
+    div{
+        display: flex;
+        justify-content: space-around;
+    }
+
+    input {
+        width: 10rem;
+        height: 10rem;
+        font-size: 10rem;
+        text-align: center;
+        border: none;
+        border-bottom: 2px solid #ccc;
+        &:focus{
+            outline: none;
+        }
+    }
+}
+
+button{
+    background-color: #FFBC0D;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 0 auto;
+    display: block;
+    margin-top: 15px;
+}
+
+#paiementButtons{
+    position: relative;
+
+    #lastButton{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+    }
+}
+
+#message{
+    font-family: 'Caveat';
+    font-weight: bold;
+    font-size: 4rem;
+}
