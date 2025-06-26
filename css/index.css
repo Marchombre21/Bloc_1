@@ -1,11 +1,10 @@
-@import "./common.css";
+@import './common.css';
 body {
   font-size: 1.6rem;
   background-image: url("../img/images/mc_landing_banner.png");
   background-position: top;
   background-repeat: no-repeat;
   height: 100dvh;
-  /* background-size: cover; */
 }
 
 #order-type {
@@ -14,25 +13,25 @@ body {
   border-radius: 15px;
   padding: 2rem;
 }
-#order-type button {
+#order-type a {
   border: 5px solid yellow;
-  margin: 1rem;
+  margin: 1rem auto;
+  display: block;
   padding: 3rem 5rem;
   width: 250px;
   height: 200px;
-}
-#order-type button a {
   text-decoration: inherit;
   color: inherit;
+  border-radius: 15px;
 }
-#order-type button figure {
+#order-type a figure {
   height: 75%;
 }
-#order-type button figure figcaption {
+#order-type a figure figcaption {
   font-size: 20px;
 }
-#order-type button:hover {
-  border-color: #BD0017;
+#order-type a:hover {
+  border-color: #bd0017;
 }
 
 .marginY {
@@ -43,6 +42,9 @@ body {
   .flexLandscape {
     display: flex;
     justify-content: center;
+  }
+  #order-type a {
+    margin: 1rem;
   }
 }
 

@@ -1,54 +1,52 @@
-@import "./common.css";
+@import './common.css';
 
 body {
-    font-size: 1.6rem;
-    background-image: url("../img/images/mc_landing_banner.png");
-    background-position: top;
-    background-repeat: no-repeat;
-    height: 100dvh;
-    /* background-size: cover; */
+  font-size: 1.6rem;
+  background-image: url('../img/images/mc_landing_banner.png');
+  background-position: top;
+  background-repeat: no-repeat;
+  height: 100dvh;
 }
 
 #order-type {
-    background-color: white;
-    text-align: center;
+  background-color: white;
+  text-align: center;
+  border-radius: 15px;
+  padding: 2rem;
+
+  a {
+    border: 5px solid yellow;
+    margin: 1rem auto;
+    display: block;
+    padding: 3rem 5rem;
+    width: 250px;
+    height: 200px;
+    text-decoration: inherit;
+    color: inherit;
     border-radius: 15px;
-    padding: 2rem;
-
-    button {
-        border: 5px solid yellow;
-        margin: 1rem;
-        padding: 3rem 5rem;
-        width: 250px;
-        height: 200px;
-
-        a {
-            text-decoration: inherit;
-            color: inherit;
-        }
-
-        figure {
-            height: 75%;
-
-            figcaption {
-                font-size: 20px;
-            }
-        }
-
-        &:hover {
-            border-color: #BD0017;
-        }
+    figure {
+      height: 75%;
+      figcaption {
+        font-size: 20px;
+      }
     }
+
+    &:hover {
+      border-color: #bd0017;
+    }
+  }
 }
 
 .marginY {
-    margin: 3rem 0;
+  margin: 3rem 0;
 }
 
 @media (orientation: landscape) {
-    .flexLandscape {
-        display: flex;
-        justify-content: center;
-    }
+  .flexLandscape {
+    display: flex;
+    justify-content: center;
+  }
+  #order-type a{
+    margin: 1rem;
+  }
 }
-

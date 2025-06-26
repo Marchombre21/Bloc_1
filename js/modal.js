@@ -95,54 +95,58 @@ let step = 0;
 
 export const backgroundClick = () => {
     step = 0;
-    const cancelledOrder = orderContentMenu.pop();
-    substractFromResult(cancelledOrder.price);
     updateOrder();
 }
 
-export const openMenusWindow = () => {
+const menu = {
+    name: "",
+    price: 0,
+    supplements: []
+};
+export const openMenusWindow = (name, price) => {
     step++;
+    menu.name = name;
+    menu.price = price;
 
     if (step === 1 || step === 2 || step === 3) {
         mainContent = `
-                <label class="firstLabels" for="${contentModal[chosenCategorie][step]["label"].id1}">
-                    <input type="radio" id="${contentModal[chosenCategorie][step]["label"].id1}" value="${contentModal[chosenCategorie][step]["label"].id1}" name="${contentModal[chosenCategorie][step]["label"].name}">
-                    <figure><img src="${contentModal[chosenCategorie][step]["images"].image1}" alt=""></figure>
-                    <span>${contentModal[chosenCategorie][step]["imageTitle"].title1}</span>
-                </label>
-                <label class="firstLabels" for="${contentModal[chosenCategorie][step]["label"].id2}">
-                    <input type="radio" id="${contentModal[chosenCategorie][step]["label"].id2}" value="${contentModal[chosenCategorie][step]["label"].id2}" name="${contentModal[chosenCategorie][step]["label"].name}">
-                    <figure><img src="${contentModal[chosenCategorie][step]["images"].image2}" alt=""></figure>
-                    <span>${contentModal[chosenCategorie][step]["imageTitle"].title2}</span>
-                </label>
-                `
+        <label class="firstLabels" for="${contentModal[chosenCategorie][step]["label"].id1}">
+        <input type="radio" id="${contentModal[chosenCategorie][step]["label"].id1}" value="${contentModal[chosenCategorie][step]["label"].id1}" name="${contentModal[chosenCategorie][step]["label"].name}">
+        <figure><img src="${contentModal[chosenCategorie][step]["images"].image1}" alt=""></figure>
+        <span>${contentModal[chosenCategorie][step]["imageTitle"].title1}</span>
+        </label>
+        <label class="firstLabels" for="${contentModal[chosenCategorie][step]["label"].id2}">
+        <input type="radio" id="${contentModal[chosenCategorie][step]["label"].id2}" value="${contentModal[chosenCategorie][step]["label"].id2}" name="${contentModal[chosenCategorie][step]["label"].name}">
+        <figure><img src="${contentModal[chosenCategorie][step]["images"].image2}" alt=""></figure>
+        <span>${contentModal[chosenCategorie][step]["imageTitle"].title2}</span>
+        </label>
+        `
     } else if (step === 4) {
         let content = "";
         productsList.boissons.forEach(product => {
             content += `
             
             <label class="lastLabels" for="${product.nom}">
-                    <input type="radio" id="${product.nom}" value="${product.nom}" name="boissons">
-                    <figure><img src="../img${product.image}" alt=""></figure>
-                    <span>${product.nom}</span>
-                </label>
-        `})
+            <input type="radio" id="${product.nom}" value="${product.nom}" name="boissons">
+            <figure><img src="../img${product.image}" alt=""></figure>
+            <span>${product.nom}</span>
+            </label>
+            `})
         mainContent = new Menu(content, 2).render()
     }
 
-    // &times; code natif d'html pour faire le signe de la multiplication.
     contentChoice = `
         <span id="closeButton" class="close">&times;</span>
         <button id="back" type="button">Retour</button>
         <form action="">
-            <header>
-                <h1>${contentModal[chosenCategorie][step].title}</h1>
-                <p>${contentModal[chosenCategorie][step].sentence}</p>
-            </header>
-            <div>
-            ${mainContent}
-            </div>
-            <button disabled type="submit">${contentModal[chosenCategorie][step].button}</button>
+        <header>
+        <h1>${contentModal[chosenCategorie][step].title}</h1>
+        <p>${contentModal[chosenCategorie][step].sentence}</p>
+        </header>
+        <div>
+        ${mainContent}
+        </div>
+        <button disabled type="submit">${contentModal[chosenCategorie][step].button}</button>
         </form>
         `
 
@@ -151,8 +155,6 @@ export const openMenusWindow = () => {
     modal.querySelector("#closeButton").addEventListener("click", () => {
         backgroundModal.style.display = "none";
         step = 0;
-        const cancelledOrder = orderContentMenu.pop();
-        substractFromResult(cancelledOrder.price);
         updateOrder();
     })
 
@@ -164,14 +166,12 @@ export const openMenusWindow = () => {
     }
 
     back.addEventListener("click", () => {
-        const lastOrderIndex = orderContentMenu.length - 1;
-        const cancelledSupplement = orderContentMenu[lastOrderIndex].supplements.pop()
+        const cancelledSupplement = menu.supplements.pop()
         if (step === 2) {
             // Alors là c'est le bordel! Mais c'est tout ce que j'ai trouvé.
-            if (orderContentMenu[lastOrderIndex].name.toLowerCase().includes("maxi")) {
-                orderContentMenu[lastOrderIndex].name = orderContentMenu[lastOrderIndex].name.replace("Menu Maxi Best Of", "Menu");
-                orderContentMenu[lastOrderIndex].price = ((orderContentMenu[lastOrderIndex].price * 100) - 200) / 100;
-                substractFromResult(Number(2))
+            if (menu.name.toLowerCase().includes("maxi")) {
+                menu.name = menu.name.replace("Menu Maxi Best Of", "Menu");
+                menu.price = ((menu.price * 100) - 200) / 100;
             }
         } if (step === 4) {
             if (cancelledSupplement === "Salade") {
@@ -180,7 +180,7 @@ export const openMenusWindow = () => {
         }
         step -= 2;
         updateOrder()
-        openMenusWindow()
+        openMenusWindow(menu.name, menu.price)
     })
 
 
@@ -199,29 +199,30 @@ export const openMenusWindow = () => {
     form.addEventListener("submit", (e) => {
         e.preventDefault();
         const choice = form.querySelector("input[type='radio']:checked").value;
-        const lastOrderIndex = orderContentMenu.length - 1;
+        // const lastOrderIndex = orderContentMenu.length - 1;
         if (step === 1) {
+            menu.supplements = [];
             if (choice === "maxi") {
-                orderContentMenu[lastOrderIndex].name = orderContentMenu[lastOrderIndex].name.replace("Menu", "Menu Maxi Best Of");
+                menu.name = menu.name.replace("Menu", "Menu Maxi Best Of");
                 // Seul moyen que j'ai trouvé pour que les 2€ s'ajoutent correctement. orderContentMenu[lastOrderIndex].price += 2 donnait 10.92 pour un prix initial de 10.9.
-                orderContentMenu[lastOrderIndex].price = ((orderContentMenu[lastOrderIndex].price * 100) + 200) / 100;
-                addToResult(2)
-
+                menu.price = ((menu.price * 100) + 200) / 100;
             }
-            openMenusWindow();
+            openMenusWindow(menu.name, menu.price);
         } else if (step === 2) {
             if (choice === "Salade") {
-                orderContentMenu[lastOrderIndex].supplements.push(choice)
+                menu.supplements.push(choice)
                 step = 3;// Pour sauter l'étape du choix frites/potatoes
             }
-            openMenusWindow();
+            openMenusWindow(menu.name, menu.price);
         } else if (step === 3) {
-            orderContentMenu[lastOrderIndex].supplements.push(choice);
-            openMenusWindow()
+            menu.supplements.push(choice);
+            openMenusWindow(menu.name, menu.price)
         } else if (step === 4) {
-            orderContentMenu[lastOrderIndex].supplements.push(choice);
+            menu.supplements.push(choice);
+            orderContentMenu.push({...menu, menu});
             backgroundModal.style.display = "none";
             step = 0
+            addToResult(Number(menu.price));
         }
         updateOrder()
 

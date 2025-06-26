@@ -6,7 +6,6 @@ const backgroundModal = document.getElementById("backgroundModal");
 import './order.js';
 import { orderContent, updateOrder, addToResult, substractFromResult } from './order.js';
 import { backgroundClick, openDrinksWindow, openMenusWindow } from './modal.js';
-import { orderContentMenu } from "./order.js";
 
 
 const presentationCategorie = {
@@ -22,12 +21,14 @@ const presentationCategorie = {
 };
 
 const getCategories = async () => {
-    const categories = await fetch("../datas/categories.json").then(res => res.json())
+    const response = await fetch("../datas/categories.json");
+    const categories = await response.json();
     return categories
 }
 
 const getProducts = async () => {
-    const productsList = await fetch("../datas/produits.json").then(res => res.json());
+    const response = await fetch("../datas/produits.json");
+    const productsList = await response.json();
     return productsList
 }
 
@@ -119,19 +120,15 @@ const setCurrentCategorieContent = () => {
             const name = button.dataset.name;
             const price = button.dataset.price;
             const image = button.dataset.image;
+
             if (chosenCategorie === "menus") {
-                openMenusWindow()
-                orderContentMenu.push({
-                    name,
-                    price,
-                    supplements: []
-                })
+                openMenusWindow(name, price)
                 backgroundModal.style.display = "flex"
-                //Obligé de passer par une fonction pour ajouter au prix car l'import direct de result depuis un module fait passer la variable en constante (lecture seule d'après chatGPT) et on ne peut rien y réassigner.
-                addToResult(price);
+
             } else if (chosenCategorie === "boissons") {
                 openDrinksWindow(name, price, image);
                 backgroundModal.style.display = "flex"
+                
             } else {
                 const index = orderContent.indexOf(orderContent.find(item => item.name === name));
                 if(index != -1){
