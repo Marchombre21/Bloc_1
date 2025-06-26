@@ -219,7 +219,7 @@ export const openMenusWindow = (name, price) => {
             openMenusWindow(menu.name, menu.price)
         } else if (step === 4) {
             menu.supplements.push(choice);
-            orderContentMenu.push({...menu, menu});
+            orderContentMenu.push({...menu});
             backgroundModal.style.display = "none";
             step = 0
             addToResult(Number(menu.price));
