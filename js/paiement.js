@@ -13,18 +13,22 @@ inputs.forEach((input, index) => {
 
 });
 
-const sendOrder = (order) => {
+const sendOrder = async (order) => {
 try{
-    fetch("http://localhost/fake-api", {
+   const response = await fetch("http://localhost/fake-api", {
         method: "POST",
         headers: {
             "Content-type": "application/json"
         },
         body: order
     })
+    if(!response.ok){
+        throw new Error("Un soucis à eu lieu avec l'envoi de la commande.")
+    }
     console.log("Commande bien envoyée!");
 } catch (error){
     alert("Un problème a eu lieu lors de l'envoi de la commande.")
+    console.error(error);
 }
 }
 send.addEventListener("click", () => {

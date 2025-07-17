@@ -33,7 +33,7 @@ export const updateOrder = () => {
       `<div class="borderOrder">
         <h4>${item.name}</h4>
         <ul>${supplementsList.join("")}</ul>
-        <div class="price-trash">${item.price} €<figure><img class="trashs" data-type="menus" data-index =${index} src="../img/images/trash.png" alt="trash"></figure></div>
+                <div class="price-trash right-side">${item.price} €<figure><img class="trashs" data-type="menus" data-index =${index} src="../img/images/trash.png" alt="trash"></figure></div>
       </div>
       
       `
@@ -89,6 +89,8 @@ export const updateOrder = () => {
       orderContentMenu
     ]
   };
+
+order.querySelector("#pay").disabled = result === 0;
 
   order.querySelector("#pay").addEventListener("click", () => {
     localStorage.setItem("order", JSON.stringify(finalOrder))

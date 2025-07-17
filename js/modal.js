@@ -199,7 +199,6 @@ export const openMenusWindow = (name, price) => {
     form.addEventListener("submit", (e) => {
         e.preventDefault();
         const choice = form.querySelector("input[type='radio']:checked").value;
-        // const lastOrderIndex = orderContentMenu.length - 1;
         if (step === 1) {
             menu.supplements = [];
             if (choice === "maxi") {

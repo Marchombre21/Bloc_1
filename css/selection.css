@@ -118,6 +118,12 @@ section div header {
   /* overflow: hidden; */
 }
 
+@media (min-width: 768px) {
+  .right-side {
+    justify-content: end;
+  }
+}
+
 #order span.fatAndBold {
   /* position: absolute;
   right: 0; */

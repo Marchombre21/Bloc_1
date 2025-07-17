@@ -4,7 +4,7 @@ const categoriesContent = document.getElementById("content");
 const headerProducts = document.querySelector("header");
 const backgroundModal = document.getElementById("backgroundModal");
 import './order.js';
-import { orderContent, updateOrder, addToResult, substractFromResult } from './order.js';
+import { orderContent, updateOrder, addToResult } from './order.js';
 import { backgroundClick, openDrinksWindow, openMenusWindow } from './modal.js';
 
 
@@ -21,15 +21,30 @@ const presentationCategorie = {
 };
 
 const getCategories = async () => {
-    const response = await fetch("../datas/categories.json");
-    const categories = await response.json();
-    return categories
+    try {
+        const response = await fetch("../datas/categories.json");
+        if (!response.ok) {
+            throw new Error("Les catégories n'ont pas pu être récupérées.")
+        }
+        const categories = await response.json();
+        return categories
+
+    } catch (error) {
+        console.error(error)
+    }
 }
 
 const getProducts = async () => {
-    const response = await fetch("../datas/produits.json");
-    const productsList = await response.json();
-    return productsList
+    try {
+        const response = await fetch("../datas/produits.json");
+        if (!response.ok) {
+            throw new Error("Les produits n'ont pas pu être récupérés.")
+        }
+        const productsList = await response.json();
+        return productsList
+    } catch (error) {
+        console.error(error)
+    }
 }
 
 const categoriesList = await getCategories();
@@ -93,8 +108,8 @@ const setCurrentCategorieContent = () => {
 
 
     // Ici on utilise la fonction native de js .scrollBy pour faire défiler un élément, et même plus précisemment, le scrollLeft qui gère le défilement horizontal (en opposition au scrollTop).
-    
-    
+
+
     rightArrow.addEventListener("click", () => {
         categories.scrollBy({ left: 200, behavior: 'smooth' })
     })
@@ -128,24 +143,24 @@ const setCurrentCategorieContent = () => {
             } else if (chosenCategorie === "boissons") {
                 openDrinksWindow(name, price, image);
                 backgroundModal.style.display = "flex"
-                
+
             } else {
                 const index = orderContent.indexOf(orderContent.find(item => item.name === name));
-                if(index != -1){
+                if (index != -1) {
                     orderContent[index].quantity += 1;
-                    orderContent[index].price = Math.round(Number(orderContent[index].price)* 100 + Number(price)* 100)  / 100
-                }else{
+                    orderContent[index].price = Math.round(Number(orderContent[index].price) * 100 + Number(price) * 100) / 100
+                } else {
                     orderContent.push({
-                    name,
-                    price,
-                    quantity: 1
-                })
+                        name,
+                        price,
+                        quantity: 1
+                    })
                 }
-                
+
                 addToResult(price)
             }
             updateOrder()
-             
+
         })
     });
 }
